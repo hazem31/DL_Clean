@@ -164,7 +164,7 @@ class MultiLayer:
 
         return self.parameters
 
-    def train(self, X, Y, num_iterations=10000, print_cost=False, cont=0, learning_rate=1 , regu_term=0 , batch_size=0 , opt_func=batch_gd_optm):
+    def train(self, X, Y, num_iterations=10000, print_cost=False , print_cost_each=100, cont=0, learning_rate=1 , regu_term=0 , batch_size=0 , opt_func=batch_gd_optm):
 
         # for i in range(0, num_iterations):
         #
@@ -180,8 +180,8 @@ class MultiLayer:
         #         print("Cost after iteration %i: %f" % (i, cost))
         #
 
-        parameters = batch_gd_optm(self,X,Y , num_iterations,print_cost,cont,learning_rate,regu_term,batch_size)
-        return parameters
+        parameters , costs = batch_gd_optm(self,X,Y , num_iterations,print_cost,print_cost_each,cont,learning_rate,regu_term,batch_size)
+        return parameters , costs
 
     def predict(self, X):
 

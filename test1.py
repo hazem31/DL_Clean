@@ -9,54 +9,64 @@ from dlFramework import frame as fw
 
 np.random.seed(1)
 
-X, Y = load_planar_dataset()
-
-plt.scatter(X[0, :], X[1, :], c=Y[0,:], s=40, cmap=plt.cm.Spectral);
-plt.show()
-
-
-model = fw.MultiLayer()
-
-model.addLayerInput(X.shape[0])
-
-model.addHidenLayer(4,act_func=fw.sigmoid)
-
-
-model.addOutputLayer(Y.shape[0],act_func=fw.sigmoid)
-
-model.initialize_parameters(seed=2)
-
-parameters = model.train(X,Y,num_iterations=10000,print_cost=True , cont=1)
-
-print(parameters)
-
-acc = model.test(X,Y)
-
-print(acc)
-
-plot_decision_boundary(lambda x: (model.predict(x.T) > 0.5) * 1, X, Y)
-plt.title("Decision Boundary for hidden layer size " + str(4))
-plt.show()
-
-
-# X_assess, Y_assess = nn_model_test_case()
-# plt.scatter(X_assess[0, :], X_assess[1, :], c=Y_assess[0,:], s=40, cmap=plt.cm.Spectral);
+# X, Y = load_planar_dataset()
+#
+# plt.scatter(X[0, :], X[1, :], c=Y[0,:], s=40, cmap=plt.cm.Spectral);
 # plt.show()
 #
 #
 # model = fw.MultiLayer()
 #
-# model.addLayerInput(X_assess.shape[0])
+# model.addLayerInput(X.shape[0])
+#
+# model.addHidenLayer(4,act_func=fw.sigmoid)
 #
 #
-# model.addOutputLayer(Y_assess.shape[0],act_func=fw.sigmoid)
+# model.addOutputLayer(Y.shape[0],act_func=fw.sigmoid)
 #
-# model.initialize_parameters(seed=1)
+# model.initialize_parameters(seed=2)
 #
-# parameters = model.train(X_assess,Y_assess,num_iterations=10000,print_cost=True , cont=1)
+# parameters , costs = model.train(X,Y,num_iterations=10000,print_cost=True , print_cost_each=1 , cont=1)
 #
 # print(parameters)
 #
-# plot_decision_boundary(lambda x: (model.predict(x.T) > 0.5) * 1, X_assess, Y_assess)
+# acc = model.test(X,Y)
+#
+# print(acc)
+#
+# plt.plot(costs)
+# plt.ylabel('cost')
+# plt.xlabel('iterations')
+# plt.show()
+#
+# plot_decision_boundary(lambda x: (model.predict(x.T) > 0.5) * 1, X, Y)
 # plt.title("Decision Boundary for hidden layer size " + str(4))
 # plt.show()
+
+
+X_assess, Y_assess = nn_model_test_case()
+plt.scatter(X_assess[0, :], X_assess[1, :], c=Y_assess[0,:], s=40, cmap=plt.cm.Spectral);
+plt.show()
+
+
+model = fw.MultiLayer()
+
+model.addLayerInput(X_assess.shape[0])
+
+
+model.addOutputLayer(Y_assess.shape[0],act_func=fw.sigmoid)
+
+model.initialize_parameters(seed=1)
+
+parameters , costs = model.train(X_assess,Y_assess,num_iterations=10000,print_cost=True , cont=1)
+
+print(parameters)
+
+plt.plot(costs)
+plt.ylabel('cost')
+plt.xlabel('iterations')
+plt.show()
+
+plot_decision_boundary(lambda x: (model.predict(x.T) > 0.5) * 1, X_assess, Y_assess)
+plt.title("Decision Boundary for hidden layer size " + str(4))
+plt.show()
