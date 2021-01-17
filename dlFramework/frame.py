@@ -180,7 +180,7 @@ class MultiLayer:
         #         print("Cost after iteration %i: %f" % (i, cost))
         #
 
-        parameters , costs = batch_gd_optm(self,X,Y , num_iterations,print_cost,print_cost_each,cont,learning_rate,regu_term,batch_size)
+        parameters , costs = opt_func(self,X,Y , num_iterations,print_cost,print_cost_each,cont,learning_rate,regu_term,batch_size)
         return parameters , costs
 
     def predict(self, X):
