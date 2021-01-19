@@ -15,6 +15,7 @@ m_train = train_set_x_orig.shape[0]
 m_test = test_set_x_orig.shape[0]
 num_px = train_set_x_orig.shape[1]
 
+
 index = 20
 plt.imshow(train_set_x_orig[index])
 print("y = " + str(train_set_y[:, index]) + ", it's a '" + classes[np.squeeze(train_set_y[:, index])].decode("utf-8") +  "' picture.")
@@ -47,9 +48,13 @@ model.addOutputLayer(train_set_y.shape[0],act_func=fw.sigmoid)
 
 model.initialize_parameters(seed=1)
 
-parameters = model.train(train_set_x,train_set_y,num_iterations=2500,print_cost=True , cont=0 ,learning_rate=0.0075)
+parm = {}
 
-print(parameters)
+parm['beta'] = 0.9
+
+parameters = model.train(train_set_x,train_set_y,num_iterations=250,print_cost=True , cont=0 ,learning_rate=0.0075 ,batch_size=20,print_cost_each=10,opt_func=fw.mom_optm,param_dic=parm )
+
+#print(parameters)
 
 acc = model.test(train_set_x,train_set_y)
 
