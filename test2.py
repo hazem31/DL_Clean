@@ -44,17 +44,25 @@ model.addHidenLayer(7,act_func=fw.relu)
 
 model.addHidenLayer(5,act_func=fw.relu)
 
+# model.addHidenLayer(128,act_func=fw.sigmoid)
+#
+# model.addHidenLayer(64,act_func=fw.sigmoid)
+#
+# model.addHidenLayer(32,act_func=fw.sigmoid)
+
 model.addOutputLayer(train_set_y.shape[0],act_func=fw.sigmoid)
 
 model.initialize_parameters(seed=1)
 
-parm = {}
-
-parm['beta'] = 0.9
-
-parameters = model.train(train_set_x,train_set_y,num_iterations=250,print_cost=True , cont=0 ,learning_rate=0.0075 ,batch_size=20,print_cost_each=10,opt_func=fw.mom_optm,param_dic=parm )
+#compare between batch and mini batch make batch of 20 and iter = 220 and batch of 0 and iter 2500 and add drop out of 0.7
+parameters,costs = model.train(train_set_x,train_set_y,num_iterations=220,print_cost=True , cont=0 ,learning_rate=0.0075 ,batch_size=20,print_cost_each=10,opt_func=fw.gd_optm,reg_term=0,drop=0 )
 
 #print(parameters)
+
+plt.plot(costs)
+plt.ylabel('cost')
+plt.xlabel('iterations')
+plt.show()
 
 acc = model.test(train_set_x,train_set_y)
 

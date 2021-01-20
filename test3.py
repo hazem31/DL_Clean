@@ -27,9 +27,16 @@ model.addOutputLayer(train_Y.shape[0],act_func=fw.sigmoid)
 
 model.initialize_parameters(seed=2)
 
-parameters , costs = model.train(train_X,train_Y,num_iterations=10000,print_cost=True , print_cost_each=1 , cont=1)
+parm = {}
+parm['beta'] = 0.98
 
-print(parameters)
+#comapre between gd and mom_optm
+parameters , costs = model.train(train_X,train_Y,num_iterations=10000,print_cost=True , print_cost_each=1 , cont=1,opt_func=fw.mom_optm,param_dic=parm)
+
+#print(parameters)
+
+print(model.test(train_X,train_Y))
+print(model.test(test_X,test_Y))
 
 plt.plot(costs)
 plt.ylabel('cost')

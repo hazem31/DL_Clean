@@ -26,9 +26,10 @@ model.addOutputLayer(Y.shape[0],act_func=fw.sigmoid)
 
 model.initialize_parameters(seed=2)
 
-parameters , costs = model.train(X,Y,num_iterations=10000,print_cost=True , print_cost_each=1 , cont=1)
 
-print(parameters)
+parameters , costs = model.train(X,Y,num_iterations=10000,print_cost=True , print_cost_each=1 , cont=1,opt_func=fw.gd_optm)
+
+#print(parameters)
 
 acc = model.test(X,Y)
 

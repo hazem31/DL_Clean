@@ -36,8 +36,8 @@ model.initialize_parameters(seed=1)
 parm = {}
 
 parm['beta'] = 0.98
-
-parameters,costs = model.train(train_X,train_Y,num_iterations=10000,print_cost=True , cont=0 ,learning_rate=0.03 ,batch_size=20,print_cost_each=100,opt_func=fw.gd_optm,param_dic=parm,reg_term=0.1 )
+#make drop out 0.8 , and reg = 0.01 compare of regulrization
+parameters,costs = model.train(train_X,train_Y,num_iterations=10000,print_cost=True , cont=0 ,learning_rate=0.03 ,batch_size=20,print_cost_each=100,opt_func=fw.gd_optm,param_dic=parm,reg_term=0.01,drop=0 )
 
 #print(parameters)
 
