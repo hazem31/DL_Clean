@@ -60,13 +60,19 @@ class MultiLayer:
 
         return self.parameters
 
-    def forward_propagation(self, X):
+    def forward_propagation(self, X,drop=0):
 
         self.prev = []
         self.prev.append((1, X))
         for i in range(len(self.layer_size) - 1):
             Zi = np.dot(self.w[i], self.prev[i][1]) + self.b[i]
             Ai = self.act_func[i](Zi)
+            if drop > 0 and i != len(self.layer_size) - 2:
+                D = np.random.rand(Ai.shape[0], Ai.shape[1])
+                D = D < drop
+                Ai = Ai * D
+                Ai = Ai / drop
+
             self.prev.append((Zi, Ai))
 
         A_last = self.prev[-1][1]
@@ -157,17 +163,17 @@ class MultiLayer:
     def update_parameters(self, grads, learning_rate=1.2 , reg_term=0, m = 1):
 
         for i in range(len(self.w)):
-            self.w[i] = (1-reg_term/m) * self.w[i] - learning_rate * grads["dW" + str(i + 1)]
-            self.b[i] = (1-reg_term/m) * self.b[i] - learning_rate * grads["db" + str(i + 1)]
+            self.w[i] = (1-(reg_term/m)) * self.w[i] - learning_rate * grads["dW" + str(i + 1)]
+            self.b[i] = (1-(reg_term/m)) * self.b[i] - learning_rate * grads["db" + str(i + 1)]
 
         self.set_parameters_internal()
 
         return self.parameters
 
-    def train(self, X, Y, num_iterations=10000, print_cost=False , print_cost_each=100, cont=0, learning_rate=1 , reg_term=0 , batch_size=0 , opt_func=gd_optm, param_dic=None):
+    def train(self, X, Y, num_iterations=10000, print_cost=False , print_cost_each=100, cont=0, learning_rate=1 , reg_term=0 , batch_size=0 , opt_func=gd_optm, param_dic=None,drop=0):
 
 
-        parameters , costs = opt_func(self,X,Y , num_iterations,print_cost,print_cost_each,cont,learning_rate,reg_term,batch_size , param_dic)
+        parameters , costs = opt_func(self,X,Y , num_iterations,print_cost,print_cost_each,cont,learning_rate,reg_term,batch_size , param_dic,drop)
         return parameters , costs
 
     def predict(self, X):
