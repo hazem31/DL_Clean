@@ -8,6 +8,9 @@ def sigmoid(z):
 def identity(z):
     return z
 
+def identity_der(z):
+    return 1
+
 
 def sigmoid_der(A):
     return A * (1 - A)
@@ -57,3 +60,6 @@ def determine_der_act_func(func):
         return relu_der
     elif func == softmax:
         return softmax_der
+    elif func == identity:
+        return identity_der
+
